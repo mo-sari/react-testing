@@ -15,13 +15,9 @@ test("it shows two inputs and a button", () => {
 });
 
 test("tries to mimic intering name and email and submitting the form", () => {
-  // Not the best implementation
+  const mock = jest.fn();
   // try to render the component
-  const argList = [];
-  const addArg = (...args) => {
-    argList.push(args);
-  };
-  render(<UserForm addUser={addArg} />);
+  render(<UserForm addUser={mock} />);
   // find the two elements
   const [nameInput, emailInput] = screen.getAllByRole("textbox");
   // simulate typing in a name
@@ -35,7 +31,9 @@ test("tries to mimic intering name and email and submitting the form", () => {
   // simulate clicking the button
   user.click(button);
   // assertion to make sure 'onUserAdd' gets called with email/name
-  expect(argList).toHaveLength(1);
-  console.log(argList);
-  expect(argList[0][0]).toEqual({ name: "mohsen", email: "mohsen@gmail.com" });
+  expect(mock).toHaveBeenCalled();
+  expect(mock).toHaveBeenCalledWith({
+    name: "mohsen",
+    email: "mohsen@gmail.com",
+  });
 });
