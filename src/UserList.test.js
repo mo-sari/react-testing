@@ -14,12 +14,17 @@ test("render one row per user", () => {
       email: "hasan@gmail.com",
     },
   ];
-  render(<UserList users={users} />);
+  const { container } = render(<UserList users={users} />);
+  //   container is a div that is covering all the html
+  // created by our component and it's created by default
+  // we can check that in logTestingPlaygroundURL();
+
   //   find all the rows in the table
-  //   screen.logTestingPlaygroundURL();
-  // we use the previous line to get our html in browser
-  // and it makes querying elements easier
-  const rows = within(screen.getByTestId("users")).getAllByRole("row");
+
+  //   in previous solution we had to change our source-code
+  // solely for the purpose of testing, if that is not what you want:
+  const rows = container.querySelectorAll("tbody tr");
+  //   tbody tr => is a regular css selector, you might want to search for that.
 
   // assertion: correct number of rows in the table
   expect(rows).toHaveLength(2);
