@@ -42,3 +42,21 @@ test("tries to mimic intering name and email and submitting the form", () => {
     email: "mohsen@gmail.com",
   });
 });
+
+test("empties the two inputs when form is submitted", () => {
+  render(<UserForm addUser={() => {}} />);
+
+  const nameInput = screen.getByRole("textbox", { name: /name/i });
+  const emailInput = screen.getByRole("textbox", { name: /email/i });
+  const button = screen.getByRole("button");
+
+  user.click(nameInput);
+  user.keyboard("jane");
+  user.click(emailInput);
+  user.keyboard("jane@jane.com");
+
+  user.click(button);
+
+  expect(nameInput).toHaveValue("");
+  expect(emailInput).toHaveValue("");
+});

@@ -7,6 +7,8 @@ function UserForm({ addUser }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     addUser({ name, email });
+    setEmail("");
+    setName("");
   };
   return (
     <form onSubmit={handleSubmit}>
