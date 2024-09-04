@@ -2,7 +2,7 @@ import { within, screen, render } from "@testing-library/react";
 import user from "@testing-library/user-event";
 import App from "./App";
 
-test("can receive a new user and show it on a list", () => {
+test("can receive a new user and show it on a list", async () => {
   render(<App />);
 
   const nameInput = screen.getByRole("textbox", {
@@ -14,15 +14,15 @@ test("can receive a new user and show it on a list", () => {
   const button = screen.getByRole("button");
 
   user.click(nameInput);
-  user.keyboard("jane");
+  user.keyboard("mohsen");
   user.click(emailInput);
-  user.keyboard("jane@jane.com");
+  user.keyboard("mohsen@gmail.com");
 
   user.click(button);
 
-  const name = screen.getByRole("cell", { name: "jane" });
-  const email = screen.getByRole("cell", { name: "jane@jane.com" });
+  const entry = await screen.findByRole("row", {
+    name: /mohsen mohsen@gmail\.com/i,
+  });
 
-  expect(name).toBeInTheDocument();
-  expect(email).toBeInTheDocument();
+  expect(entry).toBeInTheDocument();
 });
