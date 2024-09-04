@@ -43,7 +43,9 @@ test("tries to mimic intering name and email and submitting the form", () => {
   });
 });
 
-test("empties the two inputs when form is submitted", () => {
+const wait = (milliseconds) =>
+  new Promise((resolve) => setTimeout(resolve, milliseconds));
+test("empties the two inputs when form is submitted", async () => {
   render(<UserForm addUser={() => {}} />);
 
   const nameInput = screen.getByRole("textbox", { name: /name/i });
@@ -56,7 +58,7 @@ test("empties the two inputs when form is submitted", () => {
   user.keyboard("jane@jane.com");
 
   user.click(button);
-
+  await wait(1000);
   expect(nameInput).toHaveValue("");
   expect(emailInput).toHaveValue("");
 });
